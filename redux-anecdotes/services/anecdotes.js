@@ -2,6 +2,8 @@ import axios from 'axios'
 
 const baseUrl = 'http://localhost:3001/anecdotes'
 
+
+
 const getId = () => (100000 * Math.random()).toFixed(0)
 
 const getAll = async () => {
@@ -19,4 +21,11 @@ const createNew = async (content) => {
   return response.data
 }
 
-export { getAll, createNew }
+const vote = async (id) => {
+  const anecdote = await axios.get(baseUrl + "/" + id);
+  anecdote.data.votes++;
+  const updatedAnecdote = await axios.put(baseUrl + "/" + id, anecdote.data)
+  return updatedAnecdote.data
+}
+
+export { getAll, createNew, vote }
